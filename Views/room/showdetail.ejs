@@ -7,7 +7,7 @@
         
         <%if(user == room.author._id){ %>
             <form class="buttonRoom">
-                <button type="submit" class="button_css"  formmethod="GET" formaction="/rooms/<%= room.id%>/edit"> Edit </button>
+                <button type="submit" class="button_css"  formmethod="GET" formaction="/rooms/<%= room.id%>/edit"> Update </button>
                 <button type="submit" class="button_css"  formmethod="POST" formaction="/rooms/<%= room.id%>?_method=DELETE"> Delete </button>		
             </form>
         <%} else{ %>
