@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title> UNCC STUDY ROOMS </title>
+		<link rel="stylesheet" href="/CSS/style.css" />
+		<link rel="shortcut icon" href="#" />
+	</head>
+	
+	<body>
+		<header>	
+			<div class="header1">
+				<a href="/">
+					<img class="logo" src='/Images/usrlogo3.png' alt="UNCC Study Rooms"/>
+				</a>
+
+				<h1> UNCC STUDY ROOMS </h1>
+			
+				<div class="tst1">
+					<%if(!user){%>
+						<a class="tst2" href="/users/login"> Login </a> 
+						<a class="tst2" href="/users/new"> Sign Up </a> 
+					<%}else{%>
+						<a class="tst2" href="/rooms/new"> Create a new study room </a> 
+						<a class="tst2" href='/users/profile'>Profile</a>
+					 	<a class="tst2" href='/users/logout'>Logout</a>
+					<%}%>
+				</div>
+			</div>
+			
+			<nav class="nav1">
+				<a class="tst2" href='/rooms' > Current Available Rooms : </a> 
+				<%if(userfirstName){%>
+					<a class="tst3" > Welcome <%= userfirstName%> ! </a> 
+				<%}%>
+			</nav>
+		</header>
+		<% if(errorMessages.length > 0) {%>
+			<% errorMessages.forEach(message=>{%>
+				<div class="error">
+					<%=message%>
+					<button type="button" class="close" data-dismiss="errorMessages" onclick="this.parentElement.style.display='none';">
+						&times;
+					</button>
+				</div>
+				<%});%>
+					<%}%>
+					
+		
+		<% if(successMessages.length > 0) {%>
+			<% successMessages.forEach(message=>{%>
+				<div class='success'>
+					<%=message%>
+					<button type="button" class="close" data-dismiss="errorMessages" onclick="this.parentElement.style.display='none';">&times;</button>
+				</div>
+				<%});%>
+					<%}%>

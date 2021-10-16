@@ -1,0 +1,34 @@
+<%- include('../partials/header.ejs') %>
+
+    <div class="studyroomdetails">
+		
+        <h2><%= room.course %></h2>
+        <a class="attendance"><%= attendance %> people are  going </a>
+        
+        <%if(user == room.author._id){ %>
+            <form class="buttonRoom">
+                <button type="submit" class="button_css"  formmethod="GET" formaction="/rooms/<%= room.id%>/edit"> Edit </button>
+                <button type="submit" class="button_css"  formmethod="POST" formaction="/rooms/<%= room.id%>?_method=DELETE"> Delete </button>		
+            </form>
+        <%} else{ %>
+            <form class="button1">
+                <a class="button11"> RSVP to attend</a>
+                <input type = "hidden" id="rsvp"/>
+                <button type="submit" class="buttonYes" name = "rsvp" value = "yes" formmethod="POST" formaction="/rooms/<%= room.id%>/rsvp"> Yes </button>
+                <button type="submit" class="buttonNo"  name = "rsvp" value = "no" formmethod="POST" formaction="/rooms/<%= room.id%>/rsvp"> No </button>		
+                <button type="submit" class="buttonMaybe" name = "rsvp" value = "maybe"  formmethod="POST" formaction="/rooms/<%= room.id%>/rsvp"> Maybe </button>		
+            </form>
+        <%}%>
+        <br><br>
+        <a><img src='<%= room.imageURL %>' alt="detailimg" width="350" height="185" style="float:left"/></a>
+        <div class="Hostedbydetails">
+            <h3>Hosted by : <%= room.author.firstName + ' ' + room.author.lastName %></h3>
+            <p>Date : <%= room.date%> <br>
+            Start Time : <%= room.startTime%><br>
+            End Time : <%= room.endTime%><br>
+            Location : <%= room.location%></p><br><br>
+        </div>
+        <h2> Details: </h2>
+        <a>	<%= room.content%></a>
+    </div>
+<%- include('../partials/footer.ejs') %>
