@@ -31,3 +31,4 @@ GetAllDepartments = function(rooms){
     })
     return departmentsList;
 }
+
