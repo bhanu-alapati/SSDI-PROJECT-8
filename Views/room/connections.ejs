@@ -1,0 +1,21 @@
+<%- include('../partials/header.ejs') %>
+    <div class = "category">
+        <% if (departmentsList) { %>
+            <p> Below are the courses for which group rooms were allocated </p>
+           <% departmentsList.forEach(department=>{ %>
+               <h2> <%= department %> </h2>
+                    <ul class="courses">
+                        <% rooms.forEach(room=>{ %>    
+                            <% if (room.department.toLowerCase()==department.toLowerCase()){ %>
+                            <li> <a class="tst2" href="/rooms/<%= room.id %>"> <%= room.course %> </a></li>        
+                            <% } %>
+                        <% }); %>  
+                    </ul>
+                    <br>
+            <% }); %>
+        <% }else{ %>
+            <p class='roomsEmpty'> There are no rooms to display. </p>
+        <% } %>
+        <br><br><br><br>
+    </div>
+<%- include('../partials/footer.ejs') %>
