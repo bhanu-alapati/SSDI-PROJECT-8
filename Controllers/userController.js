@@ -1,7 +1,6 @@
 const User = require('../Models/user');
-const roomsModel = require('../Models/room');
+const rooms = require('../Models/room');
 const model = require('../Models/user');
-const rsvp = require('../Models/rsvp');
 
 exports.newUser = (req,res)=>{
     res.render('./users/new')
@@ -41,6 +40,7 @@ exports.validatelogin = (req,res,next) =>{
     User.findOne({email:email})
     .then(user=>{
         if(!user){
+            console.log('wrong email address');
             req.flash('error', 'wrong email address');  
             res.redirect('/users/login');
         }else{
@@ -49,8 +49,9 @@ exports.validatelogin = (req,res,next) =>{
                 if(result){
                     req.session.user = user._id; // Storing User id in session object.
                     req.session.userfirstName = user.firstName; // Storing FirstName in session Object.
+                    console.log(req.session);
                     req.flash('success','You have successfully logged in');
-                    res.redirect('/users/profile');
+                    res.redirect('/');
                 }else{
                     req.flash('error','Wrong Password');
                     res.redirect('/users/login');
@@ -71,4 +72,14 @@ exports.logout = (req,res,next)=>{
             res.redirect('/');
         }
     });
+}
+
+exports.profile = (req,res) =>{
+    let id = req.session.user;
+    Promise.all([model.findById(id),rooms.find({author:id})])
+    .then(results=>{
+        const [user,rooms] = results;
+        res.render('./users/profile', {user,rooms});
+        }) 
+    .catch(err=>next(err));
 }

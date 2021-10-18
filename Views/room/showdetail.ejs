@@ -3,15 +3,13 @@
     <div class="studyroomdetails">
 		
         <h2><%= room.course %></h2>
-        <a class="attendance"><%= attendance %> people are  going </a>
-        
         <%if(user == room.author._id){ %>
-            <form class="buttonRoom">
-                <button type="submit" class="button_css"  formmethod="GET" formaction="/rooms/<%= room.id%>/edit"> Update </button>
+            <form class="button1">
+                <button type="submit" class="button_css"  formmethod="GET" formaction="/rooms/<%= room.id%>/edit"> Edit </button>
                 <button type="submit" class="button_css"  formmethod="POST" formaction="/rooms/<%= room.id%>?_method=DELETE"> Delete </button>		
             </form>
         <%}%>
-        <br><br>
+        <br>
         <a><img src='<%= room.imageURL %>' alt="detailimg" width="350" height="185" style="float:left"/></a>
         <div class="Hostedbydetails">
             <h3>Hosted by : <%= room.author.firstName + ' ' + room.author.lastName %></h3>
@@ -20,7 +18,7 @@
             End Time : <%= room.endTime%><br>
             Location : <%= room.location%></p><br><br>
         </div>
-        <h2> Details: </h2>
-        <a>	<%= room.content%></a>
+        <h3> Details: </h3>
+        <p>	<%= room.content%></p>
     </div>
 <%- include('../partials/footer.ejs') %>
