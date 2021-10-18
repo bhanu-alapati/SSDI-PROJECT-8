@@ -90,3 +90,43 @@ color:white;
 	color:white;
 	font-weight:bold;
 }
+
+.button_css{
+	background-color:#E3C322;
+	color:white;
+	font-weight:bold;
+}
+
+
+.footer1{
+	clear:both;
+	padding: 45px;
+	background-color: #E3C322;	
+}
+
+.ABOUT{
+	padding-left:100px;
+	padding-right: 20px;
+	padding-bottom: 150px;
+	margin-left:5px;
+	margin-right:5px;
+	background-color:#31A36E;
+	color:white;
+}
+	
+.profile{
+	padding-left:250px;
+	padding-right: 20px;
+	padding-bottom: 150px;
+	margin-left:5px;
+	margin-right:5px;
+	background-color:#31A36E;
+	color:white;
+}
+
+tr, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
