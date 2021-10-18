@@ -1,0 +1,92 @@
+*{
+	margin:0;
+	padding:5px;
+	font-family:Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+}
+
+.labels{
+	height:140px;
+	width:150px;
+	background-color:E3C322;
+	float:left;
+}
+
+.formstyle{
+	padding-left:400px;
+	background-color:#31A36E;
+	padding-top:20px;
+	padding-bottom:30px;
+	color:white;
+}
+label{
+	line-height:43px;
+	background-color:#31A36E;
+}
+
+
+.header1{
+	background-color: #E3C322;
+}
+.tst1{
+	float: right;
+	padding-bottom:20px;
+	color: white;
+	font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+	
+}
+
+.nav1{
+	background-color: #31A36E;
+}
+
+.tst2{
+	color:white;
+	font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+}
+
+.tst3{
+	float: right;
+	color:white;
+	padding-bottom: 20px;
+	font-family: Segoe UI;
+}
+
+.description1{
+padding-left:200px;
+margin-left:5px;
+margin-right:5px;
+background-color:#31A36E;
+color:white;
+}
+
+.category{
+	padding-left:200px;
+	margin-left:5px;
+	margin-right:5px;
+	background-color:#31A36E;
+	padding-bottom:50px;
+	color:white;
+}
+
+
+.formformat{
+	margin-top:530px;
+}
+.loginformat{
+	margin-top:80px;
+}
+.signupformat{
+	margin-top:170px;
+}
+.loginsubmit{
+	margin-left: 90px;
+	background-color:#E3C322;
+	color:white;
+	font-weight:bold;
+}
+.signupsubmit{
+	margin-left: 190px;
+	background-color:#E3C322;
+	color:white;
+	font-weight:bold;
+}
