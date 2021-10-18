@@ -1,0 +1,36 @@
+<%- include('../partials/header.ejs')%>
+    
+<form method="POST" action="/rooms/<%= room.id%>?_method=PUT">
+
+    <div class="formstyle">
+    <div class="labels">
+        <label for="department" > Department : </label> <br>
+        <label for="course" > Course :  </label> <br>
+        <label for="topic" > Topic :	</label> <br>
+        <label for="date" > Date : </label> <br>
+        <label for="startTime" > Start Time : </label> <br>
+        <label for="endTime" > End Time : </label>	<br>
+        <label for="imageURL">	Image Link : </label> <br>	
+        <label for="location"> Location : </label><br>
+        <label for="roomType"> Room Type :</label><br>
+        <label for="content"> Content :</label>
+    </div>
+
+    <div class="inputs">
+        <input type="text" id="department" name="department" value = "<%= room.department%>" required /> <br>
+        <input type="text" id="course" name="course" value = "<%= room.course%>" required/> <br>
+        <input type="text" id="topic" name="topic" value = "<%= room.topic%>" required/> <br>
+        <input type="date" id="date" name="date" value = "<%= room.date%>" required/> <br>
+        <input type="time" id="startTime" name="startTime" value = "<%= room.startTime%>" required/> <br>
+        <input type="time" id="endTime" name="endTime" value = "<%= room.endTime%>" required/> <br>
+        <input type="text" id="imageURL" name="imageURL" value="<%= room.imageURL%>" required/> <br>
+        <input type="text" id="location" name="location" value="<%= room.location%>" required/> <br>
+        <input type="text" id="roomType" name="roomType" value="<%= room.roomType%>" required/> <br>
+        <textarea rows="5" cols="50" id="content" name="content" required><%= room.content%></textarea>
+    </div>
+    <p class="formformat"></p>
+    <button class="submit1" > Update </button>
+    </div>
+</form>
+        
+<%- include('../partials/footer.ejs')%>
