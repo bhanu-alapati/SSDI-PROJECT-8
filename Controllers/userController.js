@@ -1,6 +1,7 @@
 const User = require('../Models/user');
-const rooms = require('../Models/room');
+const roomsModel = require('../Models/room');
 const model = require('../Models/user');
+const rsvp = require('../Models/rsvp');
 
 exports.newUser = (req,res)=>{
     res.render('./users/new')
@@ -40,7 +41,6 @@ exports.validatelogin = (req,res,next) =>{
     User.findOne({email:email})
     .then(user=>{
         if(!user){
-            console.log('wrong email address');
             req.flash('error', 'wrong email address');  
             res.redirect('/users/login');
         }else{
@@ -49,9 +49,8 @@ exports.validatelogin = (req,res,next) =>{
                 if(result){
                     req.session.user = user._id; // Storing User id in session object.
                     req.session.userfirstName = user.firstName; // Storing FirstName in session Object.
-                    console.log(req.session);
                     req.flash('success','You have successfully logged in');
-                    res.redirect('/');
+                    res.redirect('/users/profile');
                 }else{
                     req.flash('error','Wrong Password');
                     res.redirect('/users/login');
@@ -74,12 +73,52 @@ exports.logout = (req,res,next)=>{
     });
 }
 
-exports.profile = (req,res) =>{
+exports.profile = (req,res,next) =>{
     let id = req.session.user;
-    Promise.all([model.findById(id),rooms.find({author:id})])
+
+    Promise.all([roomsModel.find(),rsvp.find()])
     .then(results=>{
+        let [allRooms,rsvps] = results;
+        let roomsYes = [];
+        let roomsNo = [];
+        let roomsMaybe = [];
+        rsvps.forEach(rsvp=>{
+            rsvp.yes.forEach(rn=>{
+                if(rn==id)
+                {
+                    allRooms.forEach(room=>{
+                        if(room._id==rsvp.roomId)
+                        {roomsYes.push(room);}
+                    })
+                }
+            })
+            rsvp.no.forEach(rn=>{
+                if(rn==id)
+                {
+                    allRooms.forEach(room=>{
+                        if(room._id==rsvp.roomId)
+                        {roomsNo.push(room);}
+                    })
+                }
+            })
+            rsvp.maybe.forEach(rn=>{
+                if(rn==id)
+                {
+                    allRooms.forEach(room=>{
+                        if(room._id==rsvp.roomId)
+                        {roomsMaybe.push(room);}
+                    })
+                }
+            })
+        })
+        
+        Promise.all([model.findById(id),roomsModel.find({author:id})])
+        .then(results=>{
         const [user,rooms] = results;
-        res.render('./users/profile', {user,rooms});
+        res.render('./users/profile', {user,rooms,roomsYes,roomsNo,roomsMaybe});
         }) 
+        .catch(err=>next(err));
+    })
     .catch(err=>next(err));
+    
 }

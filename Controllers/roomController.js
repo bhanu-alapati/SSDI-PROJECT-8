@@ -1,8 +1,11 @@
 const model = require('../Models/room');
 const user = require('../Models/user');
+const rsvp = require('../Models/rsvp');
+const {DateTime} = require('luxon');
 const {isLoggedin} = require('../middlewares/auth');
 const {isAuthor} = require('../middlewares/auth');
 const {validateId} = require('../middlewares/validator');
+
 
 exports.index = (req,res,next)=>{
     model.find()
@@ -39,45 +42,58 @@ exports.new = (req,res)=>{
 exports.create = (req,res,next) =>{
     let room = new model(req.body);
     room.author=req.session.user;
+    
     room.save()
     .then(room=>{
-        req.flash('success','You have successfully created a room');
-        res.redirect('/rooms');
+        let newrsvp = new rsvp({roomId:room._id});
+        newrsvp.save().then(rsvp=>{
+            req.flash('success','You have successfully created a room');
+            res.redirect('/rooms');
+        })
+        .catch(err=>next(err))
     })
     .catch(err=> {
         if(err.name === 'ValidationError'){
-            console.log(err);
             err.status = 400;
         }
-        req.flash('error',err.message);
+        req.flash('error',err.message.split(","));
         res.redirect('back');
     });
 }
 
 exports.show = (req,res,next)=>{
     let id = req.params.id;
+    let attendance = 0;
     if(!(req.params.id).match(/^[0-9a-fA-F]{24}$/))
     {
         let err = new Error('Invalid format of room id');
         err.status = 400;
         next(err);
     }
-    model.findById(id).populate('author',user)
-    .then(room=>{
-        if(room){
-        res.render('../views/room/showdetail',{room});
-        }else{
-            let err = new Error('Invalid Room id');
-            err.status = 404;
-            next(err);
-        }
+    
+    rsvp.findOne({roomId:id})
+    .then(result=>{
+        attendance = result.yes.length;
+        model.findById(id).populate('author',user)
+        .then(room=>{
+            if(room){
+                res.render('../views/room/showdetail',{room,attendance});
+            }else{
+                let err = new Error('Invalid Room id');
+                err.status = 404;
+                next(err);
+            }
+        })
+        .catch(err=>{
+            err= new Error ('Cannot find Room details with id: '+id);
+            err.status = 404
+            res.render('error', {error: err})
+        });
     })
     .catch(err=>{
-        err= new Error ('Cannot find Room details with id: '+id);
-        err.status = 404
-        res.render('error', {error: err})
-    });
-    
+        console.log(err);
+        next(err)
+    })    
 };
 
 // Edit a room with an ID
@@ -138,6 +154,147 @@ exports.update=(req,res,next)=>{
     });
 };
 
+exports.rsvp = (req,res,next) =>{
+    let room = req.params.id.toString();
+    let userId = req.session.user.toString();
+    if(!req.body){
+        let err = new Error("RSVP must be 'yes', 'no' or 'maybe'");
+        err.status =400;
+        next(err); 
+    }else if(req.body.rsvp.toLowerCase() === "yes"){
+        rsvp.updateOne({roomId:room},{$pull:{"yes":userId}})
+        .then(result=>{
+            console.log(result);
+        })
+        .catch(err=>{next(err)});
+
+        rsvp.updateOne({roomId:room},{$pull:{"maybe":userId}})
+        .then(result=>{
+            console.log(result);
+        })
+        .catch(err=>{next(err)});
+
+        rsvp.updateOne({roomId:room},{$pull:{"no":userId}})
+        .then(result=>{
+            console.log(result);
+        })
+        .catch(err=>{next(err)});
+
+        rsvp.updateOne({roomId:room},{$push:{"yes":userId}})
+        .then(result=>{
+                req.flash('success','You have successfully RSVPed this room.');
+                res.redirect('/users/profile');
+            // }).catch(err=>next(err))
+        })
+        .catch(err=>{
+            console.log(err);
+            next(err)
+        })
+    }else if(req.body.rsvp.toLowerCase() === "no"){
+        rsvp.updateOne({roomId:room},{$pull:{"yes":userId}})
+        .then(result=>{
+            console.log(result);
+        })
+        .catch(err=>{next(err)});
+
+        rsvp.updateOne({roomId:room},{$pull:{"maybe":userId}})
+        .then(result=>{
+            console.log(result);
+        })
+        .catch(err=>{next(err)});
+
+        rsvp.updateOne({roomId:room},{$pull:{"no":userId}})
+        .then(result=>{
+            console.log(result);
+        })
+        .catch(err=>{next(err)});
+
+        rsvp.updateOne({roomId:room},{$push:{"no":userId}})
+        .then(result=>{
+            console.log(result)
+                req.flash('success','You have successfully RSVPed this room.');
+                res.redirect('/users/profile');
+            // }).catch(err=>next(err))
+        })
+        .catch(err=>{
+            console.log(err);
+            next(err)
+        })
+    }else if(req.body.rsvp.toLowerCase() === "maybe"){
+        rsvp.updateOne({roomId:room},{$pull:{"yes":userId}})
+        .then(result=>{
+            console.log(result);
+        })
+        .catch(err=>{next(err)});
+
+        rsvp.updateOne({roomId:room},{$pull:{"maybe":userId}})
+        .then(result=>{
+            console.log(result);
+        })
+        .catch(err=>{next(err)});
+
+        rsvp.updateOne({roomId:room},{$pull:{"no":userId}})
+        .then(result=>{
+            console.log(result);
+        })
+        .catch(err=>{next(err)});
+
+        rsvp.updateOne({roomId:room},{$push:{"maybe":userId}})
+        .then(result=>{
+                req.flash('success','You have successfully RSVPed this room.');
+                res.redirect('/users/profile');
+            // }).catch(err=>next(err))
+        })
+        .catch(err=>{
+            console.log(err);
+            next(err)
+        })
+    }else {
+        let err = new Error("RSVP must be 'yes', 'no' or 'maybe'");
+        err.status =400;
+        next(err); 
+    }
+}
+
+exports.rsvpDelete = (req,res,next)=>{
+    let room = req.params.id.toString();
+    let userId = req.session.user.toString();
+    if(!req.body){
+        let err = new Error("RSVP must be only 'yes', 'no' or 'maybe'");
+        err.status = 400;
+        next(err); 
+    }else if(req.body.rsvp === "yes"){
+        rsvp.updateOne({roomId:room},{$pull:{"yes":userId}})
+        .then(result=>{
+            console.log(result);
+            req.flash('success','RSVP was deleted successfully!');
+            res.redirect('/users/profile');
+        })
+        .catch(err=>{next(err)});
+    }else if(req.body.rsvp === "no"){
+        rsvp.updateOne({roomId:room},{$pull:{"no":userId}})
+        .then(result=>{
+            console.log(result);
+            req.flash('success','RSVP was deleted successfully!');
+            res.redirect('/users/profile');
+        })
+    .catch(err=>{next(err)});
+    }else if(req.body.rsvp === "maybe"){
+        rsvp.updateOne({roomId:room},{$pull:{"maybe":userId}})
+        .then(result=>{
+            console.log(result);
+            req.flash('success','RSVP was deleted successfully!');
+            res.redirect('/users/profile');
+        })
+        .catch(err=>{next(err)});
+    }else {
+        let err = new Error("RSVP must be either 'yes', 'no' or 'maybe'");
+        err.status = 400;
+        next(err); 
+    }
+}
+
+
 // Delete a room identified by ID
 exports.delete = (req,res,next)=>{
     if(!(req.params.id).match(/^[0-9a-fA-F]{24}$/))
@@ -149,8 +306,12 @@ exports.delete = (req,res,next)=>{
     model.findByIdAndDelete(req.params.id, {useFindAndModify: false})
     .then(room=> {
         if(room){
-            req.flash('success','You have successfully deleted the room entry.');
-            res.redirect('/rooms');
+            rsvp.findOneAndDelete({roomId:req.params.id})
+            .then(result=>{
+                req.flash('success','You have successfully deleted the room entry.');
+                res.redirect('/rooms');
+            })
+            .catch(err=>next(err));
         } else{
             let err = new Error("Cannot find a room with id to Delete" + req.params.id);
             err.status = 404;

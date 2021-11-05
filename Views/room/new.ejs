@@ -16,16 +16,16 @@
             </div>
         
             <div class="inputs">
-                <input type="text" id="department" name="department" placeholder = "Enter the Department*" required /> <br>
-                <input type="text" id="course" name="course" required placeholder = "Enter the course Name*"/> <br>
-                <input type="text" id="topic" name="topic" required placeholder = "Enter the topic*"/> <br>
+                <input type="text" id="department" name="department" placeholder = "Enter the Department*" required minlength="3"> </input><br>
+                <input type="text" id="course" name="course" required placeholder = "Enter the course Name*" minlength="3"/> <br>
+                <input type="text" id="topic" name="topic" required placeholder = "Enter the topic*" minlength="3"/> <br>
                 <input type="date" id="date" name="date" required /> <br>
                 <input type="time" id="startTime" name="startTime" required /> <br>
                 <input type="time" id="endTime" name="endTime" required /> <br>
                 <input type="text" id="imageURL" name="imageURL" placeholder = "Enter the link of a source/Image" required/> <br>
                 <input type="text" id="location" name="location" placeholder = "Enter the Location" required/> <br>
                 <input type="text" id="roomType" name="roomType" placeholder = "Enter the roomType-Single/Group" required/> <br>
-                <textarea rows="5" cols="50" id="content" name="content" placeholder="Write a note" required></textarea>
+                <textarea rows="5" cols="50" id="content" name="content" placeholder="Write a note" required minlength="10"></textarea>
             </div>
             <p class="formformat"></p>
             <button class="submit1" > Create Room </button>

@@ -32,3 +32,34 @@ exports.isAuthor = (req,res,next)=>{
     })
     .catch(err=>next(err));
 }
+
+
+exports.isNotRoomAuthor = (req,res,next)=>{
+    let id = req.params.id;
+    rooms.findById(id)
+    .then(room=>{
+        if(room.author != req.session.user){
+            return next();
+        }else{
+            let err = new Error('Unauthorised to access the resource');
+            err.status = 401;
+            return next(err);
+        }
+    })
+    .catch(err=>next(err));
+}
+
+exports.isRoomAuthor = (req,res,next)=>{
+    let id = req.params.id;
+    rooms.findById(id)
+    .then(room=>{
+        if(room.author === req.session.user){
+            return next();
+        }else{
+            let err = new Error('Unauthorised to access the resource');
+            err.status = 401;
+            return next(err);
+        }
+    })
+    .catch(err=>next(err));
+}

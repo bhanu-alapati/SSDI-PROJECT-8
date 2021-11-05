@@ -22,7 +22,6 @@ label{
 	line-height:43px;
 	background-color:#31A36E;
 }
-
 input{
 	margin-bottom:10px;
 	width:300px;
@@ -34,9 +33,6 @@ input{
 	float:left;
 }
 
-
-
-
 .header1{
 	background-color: #E3C322;
 }
@@ -47,7 +43,6 @@ input{
 	font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
 	
 }
-
 .success {
 	background: #E3C322;
 	color: #fff;
@@ -76,7 +71,6 @@ input{
 	border-radius: 3px;
 	padding: 10px 10px;
 }
-
 
 .nav1{
 	background-color: #31A36E;
@@ -159,14 +153,22 @@ h2{
 	padding-right:300px;
 	border:none;
 }
-
+.buttonRoom{
+	float:right;
+	padding-right:450px;
+	border:none;
+}
+.attendance{
+	float:right;
+	padding-right:310px;
+	border:none;
+}
 .submit1{
 	margin-left: 250px;
 	background-color:#E3C322;
 	color:white;
 	font-weight:bold;
 }
-
 .formformat{
 	margin-top:530px;
 }
@@ -193,7 +195,44 @@ h2{
 	color:white;
 	font-weight:bold;
 }
-
+.buttonYes{
+	/* background-color:#E3C322;
+	color:white; */
+	background: linear-gradient(to bottom right, #b0db7d 40%, #99dbb4  100%);
+	/* box-shadow: 5px 5px 20px rgba(203,205,211,10); */
+	perspective: 40px;
+	border: 1px solid rgb(53, 168, 53);
+	color: rgb(1, 129, 1);
+	text-align: center;
+	border-radius: 3px;
+	padding: 10px 10px;
+}
+.buttonNo{
+	/* background-color:#E3C322;
+	color:white; */
+	font-weight:bold;
+	background: linear-gradient(to bottom right, #EF8D9C 40%, #FFC39E  100%);
+	/* box-shadow: 5px 5px 20px rgba(203,205,211,10); */
+	perspective: 40px;
+	border: 1px solid rgb(158, 69, 69);
+	color: rgb(136, 4, 4);
+	text-align: center;
+	border-radius: 3px;
+	padding: 10px 10px;
+}
+.buttonMaybe{
+	/* background-color:#E3C322;
+	color:white; */
+	font-weight:bold;
+	background: linear-gradient(to bottom right, #948def 40%, #9568ff  100%);
+	/* box-shadow: 5px 5px 20px rgba(203,205,211,10); */
+	perspective: 40px;
+	border: 1px solid rgb(34, 0, 155);
+	color: rgb(3, 47, 192);
+	text-align: center;
+	border-radius: 3px;
+	padding: 10px 10px;
+}
 .footer1{
 	clear:both;
 	padding: 45px;

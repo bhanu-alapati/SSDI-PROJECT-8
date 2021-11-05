@@ -1,28 +1,62 @@
 <%- include('../partials/header.ejs')%>
 <div class = "profile">
-    <h2><%= user.firstName%>'s Rooms  </h2><br><br>
+    <br>
+    <h2><%= user.firstName%>'s Rooms  </h2>
     <% if(rooms.length) { %>
         <table>
             <tr>
               <th>Course </th>
               <th>Topic  </th>
-              <th>Actions </th>
             </tr>
             <% rooms.forEach(room=>{ %>
                 <tr>
                     <th><%= room.course %></th>
                     <th><%= room.topic %></th>
-                    <th>
-                        <form>
-                            <button type="submit" class="button_css"  formmethod="GET" formaction="/rooms/<%= room._id%>/edit"> Edit </button>
-                            <button type="submit" class="button_css"  formmethod="POST" formaction="/rooms/<%= room._id%>?_method=DELETE"> Delete </button>		
-                        </form>
-                    </th>
                 </tr>
             <% }) %>
         </table>
     <% }else{ %>
         <h2>You are currently hosting no rooms</h2><br><br><br><br>
+    <% } %>
+
+    <br><br><h2><%= user.firstName%>'s RSVPs  </h2><br>
+    <% if(roomsYes.length || roomsNo.length || roomsMaybe.length) { %>
+        <table>
+            <tr>
+              <th>Course </th>
+              <th>Department  </th>
+              <th>Going? </th>
+            </tr>
+            <%if (roomsYes.length){
+                roomsYes.forEach(room=>{ %>
+                    <tr>
+                        <th><%= room.course %></th>
+                        <th><%= room.department %></th>
+                        <th>Yes</th>
+                    </tr>
+                <% })
+            }%>
+            <%if (roomsNo.length){
+                roomsNo.forEach(room=>{ %>
+                    <tr>
+                        <th><%= room.course %></th>
+                        <th><%= room.department %></th>
+                        <th>No</th>
+                    </tr>
+                <% })
+            }%>
+            <%if (roomsMaybe.length){
+                roomsMaybe.forEach(room=>{ %>
+                    <tr>
+                        <th><%= room.course %></th>
+                        <th><%= room.department %></th>
+                        <th>Maybe</th>
+                    </tr>
+                <% })
+            }%>
+        </table>
+    <% }else{ %>
+        <h2>You have not RSVPed any rooms.</h2><br><br><br><br>
     <% } %>
 </div>
 
