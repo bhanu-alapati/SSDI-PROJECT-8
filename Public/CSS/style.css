@@ -22,6 +22,7 @@ label{
 	line-height:43px;
 	background-color:#31A36E;
 }
+
 input{
 	margin-bottom:10px;
 	width:300px;
@@ -33,6 +34,9 @@ input{
 	float:left;
 }
 
+
+
+
 .header1{
 	background-color: #E3C322;
 }
@@ -43,6 +47,7 @@ input{
 	font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
 	
 }
+
 .success {
 	background: #E3C322;
 	color: #fff;
@@ -71,6 +76,7 @@ input{
 	border-radius: 3px;
 	padding: 10px 10px;
 }
+
 
 .nav1{
 	background-color: #31A36E;
@@ -160,6 +166,7 @@ h2{
 	color:white;
 	font-weight:bold;
 }
+
 .formformat{
 	margin-top:530px;
 }
