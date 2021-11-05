@@ -1,0 +1,30 @@
+<%- include('../partials/header.ejs')%>
+<div class = "profile">
+    <h2><%= user.firstName%>'s Rooms  </h2><br><br>
+    <% if(rooms.length) { %>
+        <table>
+            <tr>
+              <th>Course </th>
+              <th>Topic  </th>
+              <th>Actions </th>
+            </tr>
+            <% rooms.forEach(room=>{ %>
+                <tr>
+                    <th><%= room.course %></th>
+                    <th><%= room.topic %></th>
+                    <th>
+                        <form>
+                            <button type="submit" class="button_css"  formmethod="GET" formaction="/rooms/<%= room._id%>/edit"> Edit </button>
+                            <button type="submit" class="button_css"  formmethod="POST" formaction="/rooms/<%= room._id%>?_method=DELETE"> Delete </button>		
+                        </form>
+                    </th>
+                </tr>
+            <% }) %>
+        </table>
+    <% }else{ %>
+        <h2>You are currently hosting no rooms</h2><br><br><br><br>
+    <% } %>
+</div>
+
+
+<%- include('../partials/footer.ejs')%>
